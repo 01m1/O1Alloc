@@ -52,6 +52,26 @@ int mem_init() {
     return 0;
 }
 
+void print_heap_state() {
+    heap_data *header = (heap_data *)mem;
+    o_block *curr = (o_block *)((char *)mem + sizeof(heap_data));
+
+    printf("=== Heap Metadata ===\n");
+    printf("Initial size: %zu bytes\n", header->init_size);
+
+    printf("\n=== Blocks ===\n");
+    int i = 0;
+    while (curr) {
+        printf("Block %d at %p: size=%zu, free=%d, next=%p\n",
+            i, (void *)curr, curr->size, curr->free, (void *)curr->next);
+        curr = curr->next;
+        i++;
+    }
+    printf("==============\n");
+    printf("\nSize left:    %zu bytes\n", header->size_left);
+}
+
+
 int o_alloc() {
 
     return 0;
@@ -63,6 +83,7 @@ int main() {
     }
     
     printf("Memory initialised at: %p\n", mem);
+    print_heap_state();
 
     // Clean up when done
     munmap(mem, OMEM_SIZE);
