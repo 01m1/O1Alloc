@@ -7,6 +7,19 @@
 
 void* mem = NULL;  // Global pointer to memory
 
+typedef struct heap_data {
+    size_t init_size;       // Size of heap
+    size_t size_left;       // Size left in heap
+    int debug;              // Spare bit
+} heap_data;
+
+typedef struct block {
+    size_t size;        // How many bytes beyond this block have been allocated in the heap
+    struct block *next; // Where is the next block in your linked list
+    int free;           // Is this memory free, i.e., available to give away?
+    int debug;
+} o_block;
+
 int mem_init() {
     mem = mmap(
         NULL,                           // Use any address in memory
@@ -21,6 +34,11 @@ int mem_init() {
         perror("mmap failed");
         return -1;
     }
+
+    return 0;
+}
+
+int mem_alloc() {
 
     return 0;
 }
