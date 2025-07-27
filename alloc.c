@@ -3,7 +3,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#define OMEM_SIZE 1000000  // 1MB
+#define OMEM_SIZE 1048576  // 1MB
 
 void* mem = NULL;  // Global pointer to memory
 
